@@ -1,0 +1,13 @@
+{
+  "DisplayName": "Invoke-IntuneQucick-Sync",
+  "Description": "Triggers an immediate Intune sync, resets delay timers, and displays exactly when Win32Apps, WinGet apps, and PowerShell scripts will run. Includes a Proactive Remediation script.",
+  "Publisher": "Mark Orr",
+  "Version": "2",
+  "RunAsAccount": "user",
+  "EnforceSignatureCheck": false,
+  "RunAs32Bit": false,
+  "Id": "6c588d02-c10c-4389-b636-2a8df994f378",
+  "CreatedDateTime": "2026-02-05T12:03:44.2739193Z",
+  "LastModifiedDateTime": "2026-05-12T12:00:30.3663943Z",
+  "RoleScopeTagIds": "0"
+}

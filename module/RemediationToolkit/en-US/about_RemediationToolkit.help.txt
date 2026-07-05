@@ -1,0 +1,98 @@
+TOPIC
+    about_RemediationToolkit
+
+SHORT DESCRIPTION
+    Export, edit, and publish Intune proactive remediation (device health)
+    scripts via Microsoft Graph - from the command line or an interactive menu.
+
+LONG DESCRIPTION
+    RemediationToolkit gives you a round-trip workflow for Intune remediation
+    scripts:
+
+        export  ->  edit / version in Git  ->  publish
+
+    Each remediation is stored on disk as its own folder containing the
+    detection script, an optional remediation script, and a metadata.json file
+    describing its settings (and, optionally, an assignment).
+
+COMMANDS
+    Export-IntuneRemediation
+        Downloads every remediation from the tenant to disk, one folder each,
+        plus two CSV reports (a full summary and a publisher contact list).
+
+    Publish-IntuneRemediation   (alias: Push-IntuneRemediation)
+        Creates or updates remediations in Intune from local folders.
+          -Create           Create new objects.
+          -UpdateExisting   Update the object matched by metadata.json Id.
+          -Interactive      Prompt for settings; on create, also prompt for an
+                            assignment (All devices / All users / a group) and a
+                            run schedule (Daily / Hourly / Once). On update, show
+                            the current live settings and let you keep or modify
+                            each one.
+          -WhatIf           Preview only; nothing is uploaded.
+          -Menu             Open the interactive menu.
+
+    Start-RemediationToolkit
+        An arrow-key console menu (TUI) that drives the commands above. Navigate
+        with Up/Down or number keys, Enter to select, Esc to go back.
+
+    Show-RemediationToolkitHelp
+        Prints a comprehensive, colorized reference (commands, workflows,
+        permissions, schemas). Use -Command <name> for one command's full help.
+
+REQUIRED PERMISSIONS
+    Export-IntuneRemediation (read-only):
+        DeviceManagementConfiguration.Read.All
+        Group.Read.All
+        User.Read.All
+
+    Publish-IntuneRemediation (read/write):
+        DeviceManagementConfiguration.ReadWrite.All
+
+    You are prompted to consent on first connect, and you need an Intune role
+    that can manage remediations (for example, Intune Administrator).
+
+metadata.json
+    DisplayName            string   (required)
+    Description            string
+    Publisher              string   (the portal treats this as required)
+    RunAsAccount           system | user
+    RunAs32Bit             true | false
+    EnforceSignatureCheck  true | false
+    RoleScopeTagIds        comma-separated string, e.g. "0"
+    Id                     Intune object id (blank or absent = create)
+    Assignment             optional object (see below)
+
+Assignment (optional; drives assign-on-create)
+    Target          AllDevices | AllUsers | Group
+    GroupId         GUID (required when Target = Group)
+    GroupName       string (reference only)
+    ScheduleType    Daily | Hourly | Once
+    Interval        integer (every N days or hours)
+    StartTime       HH:mm  (Daily / Once)
+    StartDate       YYYY-MM-DD (Once only)
+    RunRemediation  true | false
+    UseUtc          true | false
+
+APPROVAL WORKFLOW
+    If your tenant requires approval for remediation changes, a create or update
+    returns "APPROVAL REQUIRED" with a code. This is not a failure - approve the
+    change in the Intune portal under:
+
+        Endpoint Security > Remediations > Approvals
+
+EXAMPLES
+    Export-IntuneRemediation -OutputPath .\RemediationScripts
+    Publish-IntuneRemediation -Create -Interactive -Path .\RemediationScripts\MyFix
+    Publish-IntuneRemediation -UpdateExisting -Interactive -Path .\RemediationScripts\MyFix
+    Start-RemediationToolkit
+    Show-RemediationToolkitHelp
+
+SEE ALSO
+    Show-RemediationToolkitHelp
+    Get-Help Export-IntuneRemediation -Full
+    Get-Help Publish-IntuneRemediation -Full
+    Get-Command -Module RemediationToolkit
+
+KEYWORDS
+    Intune Remediation ProactiveRemediation DeviceHealthScript Graph

@@ -1,0 +1,13 @@
+{
+  "DisplayName": "M365-User Profile Backup",
+  "Description": "Profile backup to OneDrive",
+  "Publisher": "M365-",
+  "Version": "1",
+  "RunAsAccount": "user",
+  "EnforceSignatureCheck": false,
+  "RunAs32Bit": false,
+  "Id": "30b8bafa-b105-409b-b1dc-1563ae406903",
+  "CreatedDateTime": "2025-06-16T11:37:04.2253019Z",
+  "LastModifiedDateTime": "2025-06-16T11:37:04.2253019Z",
+  "RoleScopeTagIds": "0"
+}

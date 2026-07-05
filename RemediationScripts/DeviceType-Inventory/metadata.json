@@ -1,0 +1,13 @@
+{
+  "DisplayName": "DeviceType-Inventory",
+  "Description": "",
+  "Publisher": "Mark Orr",
+  "Version": "1",
+  "RunAsAccount": "system",
+  "EnforceSignatureCheck": false,
+  "RunAs32Bit": false,
+  "Id": "9d7cd762-3ac6-4e84-872d-2881f288cbce",
+  "CreatedDateTime": "2026-07-04T09:41:38.0310694Z",
+  "LastModifiedDateTime": "2026-07-04T09:41:38.0310694Z",
+  "RoleScopeTagIds": "0"
+}

@@ -1,0 +1,13 @@
+{
+  "DisplayName": "Update-Microsoft-Store-Apps",
+  "Description": "Proactive remediation to ensure Windows Store Apps (UWP applications) are regularly scanned for updates. This remediation checks the MDM_EnterpriseModernAppManagement_AppManagement01 WMI class LastScanError property and triggers an update scan when needed. Helps maintain Store Apps in an up-to-date state across all managed devices.",
+  "Publisher": "Mark Orr",
+  "Version": "1",
+  "RunAsAccount": "system",
+  "EnforceSignatureCheck": false,
+  "RunAs32Bit": true,
+  "Id": "faabb9cb-f423-423f-b961-ac584797bc19",
+  "CreatedDateTime": "2025-12-04T08:16:16.9213658Z",
+  "LastModifiedDateTime": "2025-12-04T08:16:16.9213658Z",
+  "RoleScopeTagIds": "0"
+}

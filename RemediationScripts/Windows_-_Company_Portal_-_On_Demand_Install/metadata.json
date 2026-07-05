@@ -1,0 +1,13 @@
+{
+  "DisplayName": "Windows - Company Portal - On Demand Install",
+  "Description": "Detects whether Microsoft Company Portal (Microsoft.CompanyPortal) is installed on the device and reinstalls it on demand if a previous deployment has failed or the app is missing. Runs silently in SYSTEM context, downloads the current installer from Microsoft's official source, and writes a timestamped log to C:\\Temp\\ for auditing. Idempotent — takes no action if Company Portal is already present. Returns exit code 0 (already installed / compliant) or 1 (reinstalled / remediated).",
+  "Publisher": "Mark Orr",
+  "Version": "1",
+  "RunAsAccount": "user",
+  "EnforceSignatureCheck": false,
+  "RunAs32Bit": false,
+  "Id": "6f73007f-8bf4-45d1-974f-e63ba41f1a2e",
+  "CreatedDateTime": "2026-06-07T08:52:07.5470892Z",
+  "LastModifiedDateTime": "2026-06-07T08:52:07.5470892Z",
+  "RoleScopeTagIds": "0, 1"
+}

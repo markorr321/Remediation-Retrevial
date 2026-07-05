@@ -1,0 +1,13 @@
+{
+  "DisplayName": "Update stale Group Policies",
+  "Description": "If GP refresh was > 7 days ago, then gpupdate. IT can customize the 7 day threshold. Important for reducing network-related helpdesk calls, since many network certs and configurations are delivered via GP.",
+  "Publisher": "Microsoft",
+  "Version": "4",
+  "RunAsAccount": "system",
+  "EnforceSignatureCheck": false,
+  "RunAs32Bit": true,
+  "Id": "61dcf0ae-580d-4620-8b9a-8ce678ecc5ee",
+  "CreatedDateTime": "0001-01-01T00:00:00Z",
+  "LastModifiedDateTime": "0001-01-01T00:00:00Z",
+  "RoleScopeTagIds": "0"
+}

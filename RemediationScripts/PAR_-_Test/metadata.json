@@ -1,0 +1,13 @@
+{
+  "DisplayName": "PAR - Test",
+  "Description": "Safe, reversible test remediation. Ensures a benign registry marker (HKLM:\\SOFTWARE\\OrrTest\\RemediationTest) exists. Use to validate the toolkit end to end.",
+  "Publisher": "Mark Orr",
+  "Version": "1",
+  "RunAsAccount": "system",
+  "EnforceSignatureCheck": false,
+  "RunAs32Bit": false,
+  "Id": "eb85ac5c-98ba-4266-8450-e17d0575d74f",
+  "CreatedDateTime": "2026-07-05T10:36:39.4349473Z",
+  "LastModifiedDateTime": "2026-07-05T10:36:39.4349473Z",
+  "RoleScopeTagIds": "0"
+}

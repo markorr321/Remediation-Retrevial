@@ -1,0 +1,10 @@
+# Generated export reports — contain admin/publisher email addresses (PII) and
+# tenant object IDs. This repo is public, so never commit them.
+RemediationScripts/*.csv
+publishers-contact-list.csv
+remediation-scripts-summary.csv
+
+# Common transient files
+*.log
+Thumbs.db
+.DS_Store

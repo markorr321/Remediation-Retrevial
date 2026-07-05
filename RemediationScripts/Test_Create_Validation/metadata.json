@@ -1,0 +1,13 @@
+{
+  "DisplayName": "Test Create Validation",
+  "Description": "Safe, reversible test remediation for validating the toolkit CREATE flow (settings + assignment). Sets a benign registry marker HKLM:\\SOFTWARE\\OrrTest\\CreateValidation.",
+  "Publisher": "Mark Orr",
+  "Version": "1",
+  "RunAsAccount": "system",
+  "EnforceSignatureCheck": false,
+  "RunAs32Bit": false,
+  "Id": "e8db3ebd-23fe-4259-b965-63de8ad0613f",
+  "CreatedDateTime": "2026-07-05T10:54:57.2312689Z",
+  "LastModifiedDateTime": "2026-07-05T10:54:57.2312689Z",
+  "RoleScopeTagIds": "0"
+}

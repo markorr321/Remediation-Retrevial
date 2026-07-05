@@ -1,0 +1,13 @@
+{
+  "DisplayName": "M365-Remediate Store Icon",
+  "Description": "Remove Windows Store from Taskbar",
+  "Publisher": "M365-",
+  "Version": "1",
+  "RunAsAccount": "user",
+  "EnforceSignatureCheck": false,
+  "RunAs32Bit": false,
+  "Id": "bc8a0584-d67f-4dca-9232-7fea816a3051",
+  "CreatedDateTime": "2025-06-16T11:37:03.1504918Z",
+  "LastModifiedDateTime": "2025-06-16T11:37:03.1504918Z",
+  "RoleScopeTagIds": "0"
+}

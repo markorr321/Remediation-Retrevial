@@ -1,0 +1,13 @@
+{
+  "DisplayName": "Secure Boot-Deploy-UEFI-CA-2023-Certificate-Update-Enhanced",
+  "Description": "Enhanced version of the Microsoft PAR.",
+  "Publisher": "Mark Orr",
+  "Version": "1",
+  "RunAsAccount": "system",
+  "EnforceSignatureCheck": false,
+  "RunAs32Bit": false,
+  "Id": "ff70c417-d697-4812-9190-8e7b661509a5",
+  "CreatedDateTime": "2026-03-17T13:46:38.1398132Z",
+  "LastModifiedDateTime": "2026-03-17T13:46:38.1398132Z",
+  "RoleScopeTagIds": "0"
+}

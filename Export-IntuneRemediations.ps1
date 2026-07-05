@@ -14,6 +14,9 @@
 
 .EXAMPLE
     .\Export-IntuneRemediationScripts.ps1 -OutputPath "C:\Backup\Remediations"
+
+.NOTES
+    Author: Mark Orr
 #>
 
 [CmdletBinding()]
@@ -25,6 +28,12 @@ param(
 #Requires -Modules Microsoft.Graph.Authentication, Microsoft.Graph.DeviceManagement
 
 $ErrorActionPreference = "Stop"
+
+# ============================================================================
+#  HELPER FUNCTIONS
+#  Graph connection and read-only lookups (scripts, content, assignments,
+#  group names, publisher emails).
+# ============================================================================
 
 function Connect-ToGraph {
     Write-Host "Connecting to Microsoft Graph..." -ForegroundColor Cyan
@@ -46,6 +55,7 @@ function Connect-ToGraph {
     }
 }
 
+# Retrieve the full list of remediation scripts, following @odata.nextLink paging
 function Get-RemediationScripts {
     Write-Host "Retrieving remediation scripts from Intune..." -ForegroundColor Cyan
 
@@ -79,6 +89,7 @@ function Get-RemediationScripts {
     }
 }
 
+# Fetch a single script by Id, including the base64 detection/remediation content
 function Get-RemediationScriptContent {
     param(
         [Parameter(Mandatory = $true)]
@@ -96,6 +107,7 @@ function Get-RemediationScriptContent {
     }
 }
 
+# Fetch the assignment targets (groups / all devices / all users) for a script
 function Get-RemediationScriptAssignments {
     param(
         [Parameter(Mandatory = $true)]
@@ -113,6 +125,7 @@ function Get-RemediationScriptAssignments {
     }
 }
 
+# Resolve an Entra group Id to its display name (falls back to the Id on failure)
 function Get-GroupDisplayName {
     param(
         [Parameter(Mandatory = $true)]
@@ -129,6 +142,8 @@ function Get-GroupDisplayName {
     }
 }
 
+# Look up a user's email from their display name (exact match first, then
+# startswith); prefers 'mail' over userPrincipalName. Returns "" if not found.
 function Get-UserEmail {
     param(
         [Parameter(Mandatory = $true)]
@@ -192,6 +207,8 @@ function Get-UserEmail {
     }
 }
 
+# Write one script to disk: a sanitized per-script folder containing
+# metadata.json plus decoded detection.ps1 and remediation.ps1 files
 function Export-ScriptContent {
     param(
         [Parameter(Mandatory = $true)]
@@ -267,14 +284,17 @@ function Export-ScriptContent {
     }
 }
 
-# Main execution
+# ============================================================================
+#  MAIN EXECUTION
+# ============================================================================
 try {
     Write-Host "`n=== Intune Remediation Script Exporter ===" -ForegroundColor Cyan
     Write-Host ""
 
-    # Connect to Graph
+    # --- Step 1: Connect to Graph ---
     Connect-ToGraph
 
+    # --- Step 2: Prepare the output directory ---
     # Create output directory
     if (-not (Test-Path -Path $OutputPath)) {
         New-Item -Path $OutputPath -ItemType Directory -Force | Out-Null
@@ -284,6 +304,7 @@ try {
     Write-Host "Output directory: $resolvedPath" -ForegroundColor Cyan
     Write-Host ""
 
+    # --- Step 3: Retrieve the list of remediation scripts ---
     # Get all remediation scripts
     $scripts = Get-RemediationScripts
 
@@ -295,10 +316,11 @@ try {
     Write-Host "`nExporting scripts..." -ForegroundColor Cyan
     Write-Host ""
 
+    # --- Step 4: Export each script to disk and build the CSV summary rows ---
     # Export each script with progress and build CSV data
     $counter = 0
     $csvData = @()
-    $publisherEmailCache = @{}
+    $publisherEmailCache = @{}   # display name -> email, to avoid repeat Graph lookups
 
     foreach ($script in $scripts) {
         $counter++
@@ -313,13 +335,14 @@ try {
         $scriptWithContent = Get-RemediationScriptContent -ScriptId $script.id
 
         if ($scriptWithContent) {
+            # Write the script files (metadata + detection/remediation) to disk
             Export-ScriptContent -Script $scriptWithContent -BasePath $resolvedPath
 
             # Get assignments
             $assignments = Get-RemediationScriptAssignments -ScriptId $script.id
             $isDeployed = $assignments.Count -gt 0
 
-            # Check for script-level schedule first (this is the default for all assignments)
+            # Resolve the run schedule: check the script-level schedule first (this is the default for all assignments)
             $scriptSchedule = $null
             if ($scriptWithContent.runSchedule) {
                 $schedule = $scriptWithContent.runSchedule
@@ -338,7 +361,7 @@ try {
                 }
             }
 
-            # Build assignment details
+            # Build assignment target names and collect any per-assignment schedule overrides
             $assignmentDetails = @()
             $scheduleDetails = @()
 
@@ -391,7 +414,7 @@ try {
                 $scheduleString = "Not configured"
             }
 
-            # Get publisher email (with caching to avoid duplicate lookups)
+            # Resolve the publisher's email (cached per publisher to avoid duplicate lookups)
             $publisherName = $scriptWithContent.publisher
             $publisherEmail = ""
 
@@ -424,7 +447,7 @@ try {
                 }
             }
 
-            # Add to CSV data
+            # Add one summary row for this script to the CSV dataset
             $csvData += [PSCustomObject]@{
                 'Display Name' = $scriptWithContent.displayName
                 'Deployed' = if ($isDeployed) { 'Yes' } else { 'No' }
@@ -449,6 +472,7 @@ try {
 
     Write-Progress -Activity "Exporting Remediation Scripts" -Completed
 
+    # --- Step 5: Write the summary and publisher-contact CSV files ---
     # Export CSV summary
     $csvPath = Join-Path -Path $resolvedPath -ChildPath "remediation-scripts-summary.csv"
     $csvData | Export-Csv -Path $csvPath -NoTypeInformation -Encoding UTF8
@@ -469,6 +493,7 @@ try {
     Write-Host "Location: $resolvedPath" -ForegroundColor Green
     Write-Host ""
 
+    # --- Step 6: Print run statistics (deployment + signature enforcement) ---
     # Display summary statistics
     $deployedCount = ($csvData | Where-Object { $_.Deployed -eq 'Yes' }).Count
     $notDeployedCount = ($csvData | Where-Object { $_.Deployed -eq 'No' }).Count
@@ -495,10 +520,12 @@ try {
     }
 }
 catch {
+    # Any terminating error (ErrorActionPreference = Stop) lands here
     Write-Error "Script execution failed: $_"
     exit 1
 }
 finally {
+    # Always disconnect from Graph, whether the run succeeded or failed
     Write-Host "`nDisconnecting from Microsoft Graph..." -ForegroundColor Cyan
     Disconnect-MgGraph | Out-Null
 }

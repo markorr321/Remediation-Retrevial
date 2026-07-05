@@ -1,0 +1,13 @@
+{
+  "DisplayName": "Invoke-CustomInventory",
+  "Description": "Collects device hardware and application inventory, sends to Log Analytics",
+  "Publisher": "Mark Orr",
+  "Version": "3",
+  "RunAsAccount": "system",
+  "EnforceSignatureCheck": false,
+  "RunAs32Bit": true,
+  "Id": "fe70a3bf-c7b6-4c86-a25f-42eb04ef5aa7",
+  "CreatedDateTime": "2025-12-15T10:26:26.8329265Z",
+  "LastModifiedDateTime": "2025-12-15T20:10:49.5167812Z",
+  "RoleScopeTagIds": "0"
+}

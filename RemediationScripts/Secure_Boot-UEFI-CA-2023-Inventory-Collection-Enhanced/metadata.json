@@ -1,0 +1,13 @@
+{
+  "DisplayName": "Secure Boot-UEFI-CA-2023-Inventory-Collection-Enhanced",
+  "Description": "Collects comprehensive Secure Boot UEFI CA 2023 certificate update status for fleet-wide monitoring and reporting. Detection only — no changes are made to the device.\n\nCollects 38+ data points across 5 categories:\n- Secure Boot status (enabled, AvailableUpdates, AvailableUpdatesPolicy, HighConfidenceOptOut, MicrosoftUpdateManagedOptIn)\n- Certificate update state (UEFICA2023Status, Error, ErrorEvent)\n- Device attributes from registry (OEM manufacturer, model, firmware version/date, architecture, CanAttemptUpdateAfter throttle date)\n- Event log analysis (Event IDs 1795/1796/1800/1801/1802/1803/1808 with error codes and Known Issue IDs)\n- System info via WMI (OS version, last boot time, baseboard manufacturer/product, scheduled task status, WinCS key F33E0C8E002)\n\nOutputs a single compressed JSON string to stdout for Intune collection. Supports optional -OutputPath parameter to save JSON files to a network share for GPO-based deployments.\n\nExit 0 = Compliant (SecureBootEnabled=True AND UEFICA2023Status=Updated)\nExit 1 = Non-compliant (informational — no remediation action taken)\nLogs to: %ProgramData%\\PAM - Secure Boot - Cert Update Status Detection\\Detection.log",
+  "Publisher": "Mark Orr",
+  "Version": "1",
+  "RunAsAccount": "system",
+  "EnforceSignatureCheck": false,
+  "RunAs32Bit": true,
+  "Id": "537ade71-7047-49b7-bafd-cf9707170c85",
+  "CreatedDateTime": "2026-03-14T15:49:33.4100573Z",
+  "LastModifiedDateTime": "2026-03-14T15:49:33.4100573Z",
+  "RoleScopeTagIds": "0"
+}

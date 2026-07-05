@@ -1,0 +1,13 @@
+{
+  "DisplayName": "Windows App Auto Update",
+  "Description": "",
+  "Publisher": "Bob Ross",
+  "Version": "1",
+  "RunAsAccount": "system",
+  "EnforceSignatureCheck": false,
+  "RunAs32Bit": false,
+  "Id": "76db4441-64b0-4a51-9b72-df7c830b10e8",
+  "CreatedDateTime": "2026-07-05T10:29:20.6386913Z",
+  "LastModifiedDateTime": "2026-07-05T10:29:20.6386913Z",
+  "RoleScopeTagIds": "0"
+}

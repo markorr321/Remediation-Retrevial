@@ -1,0 +1,13 @@
+{
+  "DisplayName": "PAR - Company Portal Install",
+  "Description": "Detects if the Microsoft Company Portal app is installed. If not found, downloads and installs it automatically. \n\nLogs results to:\n\nC:\\Temp\\PAR-CompanyPortal_[datetime]\\CompanyPortal.log.",
+  "Publisher": "Mark Orr",
+  "Version": "1",
+  "RunAsAccount": "user",
+  "EnforceSignatureCheck": false,
+  "RunAs32Bit": false,
+  "Id": "18ace65b-4ba7-4e68-aab1-e13ff8e7d209",
+  "CreatedDateTime": "2026-07-05T10:23:40.7808109Z",
+  "LastModifiedDateTime": "2026-07-05T10:23:40.7808109Z",
+  "RoleScopeTagIds": "0"
+}

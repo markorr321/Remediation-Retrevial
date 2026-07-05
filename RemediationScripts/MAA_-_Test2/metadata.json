@@ -1,0 +1,13 @@
+{
+  "DisplayName": "MAA - Test2",
+  "Description": "Testing testing 1-2-3",
+  "Publisher": "Mark Orr",
+  "Version": "1",
+  "RunAsAccount": "user",
+  "EnforceSignatureCheck": true,
+  "RunAs32Bit": true,
+  "Id": "e9501970-2aab-4f59-b412-fcb3ffd9d3f1",
+  "CreatedDateTime": "2026-03-22T10:13:35.7003895Z",
+  "LastModifiedDateTime": "2026-03-22T10:13:35.7003895Z",
+  "RoleScopeTagIds": "0"
+}
